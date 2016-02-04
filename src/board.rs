@@ -8,14 +8,14 @@ impl Board {
 
 	pub fn new() -> Board {
 		Board{
-			data: Vec::new(),
+			data: Vec::with_capacity(7 * 6),
 			width: 7,
 			height: 6
 		}
 	}
 
 	fn index(&self, col: usize, row: usize) -> usize {
-		0
+		(self.width * row) + col
 	}
 
 	pub fn set(&mut self, data: bool, col: usize, row: usize) {
