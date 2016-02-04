@@ -37,10 +37,10 @@ impl Board {
 
 	pub fn print(&self) {
 
-		for w in 0..self.width {
+		for h in (0..self.height).rev() {
 			let mut line = "|".to_string();
 
-			for h in 0..self.height {
+			for w in 0..self.width {
 				line = line + match self.data[self.index(w, h)] {
 					true => "*",
 					false => "-"
