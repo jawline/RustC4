@@ -1,4 +1,4 @@
-use board::Board;
+use board::{BoardItem, Board};
 
 pub struct C4 {
 	board: Board
@@ -13,7 +13,7 @@ impl C4 {
 	}
 
 	fn find_row_for_insert(&self, col: usize) -> Option<usize> {
-		(0..self.board.height()).find(|&row| !self.board.get(col, row))
+		(0..self.board.height()).find(|&row| self.board.get(col, row) == BoardItem::Empty)
 	}
 
 	pub fn insertable_columns(&self) -> Vec<usize> {
@@ -28,7 +28,7 @@ impl C4 {
 		let row = self.find_row_for_insert(col);
 
 		if row.is_some() {
-			self.board.set(true, col, row.unwrap());
+			self.board.set(BoardItem::Naught, col, row.unwrap());
 			true
 		} else {
 			false

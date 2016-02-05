@@ -1,5 +1,12 @@
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum BoardItem {
+	Empty,
+	Naught,
+	Cross
+}
+
 pub struct Board {
-	data: Vec<bool>,
+	data: Vec<BoardItem>,
 	width: usize,
 	height: usize
 }
@@ -8,7 +15,7 @@ impl Board {
 
 	pub fn new() -> Board {
 		Board{
-			data: [false; 7*6].to_vec(),
+			data: [BoardItem::Empty; 7*6].to_vec(),
 			width: 7,
 			height: 6
 		}
@@ -26,12 +33,12 @@ impl Board {
 		self.width
 	}
 
-	pub fn set(&mut self, data: bool, col: usize, row: usize) {
+	pub fn set(&mut self, data: BoardItem, col: usize, row: usize) {
 		let idx = self.index(col, row);
 		self.data[idx] = data;
 	}
 
-	pub fn get(&self, col: usize, row: usize) -> bool {
+	pub fn get(&self, col: usize, row: usize) -> BoardItem {
 		self.data[self.index(col, row)]
 	}
 
@@ -42,8 +49,9 @@ impl Board {
 
 			for w in 0..self.width {
 				line = line + match self.data[self.index(w, h)] {
-					true => "*",
-					false => "-"
+					BoardItem::Empty => "*",
+					BoardItem::Naught => "O",
+					BoardItem::Cross => "X"
 				};
 			}
 
