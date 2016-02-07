@@ -10,6 +10,7 @@ use rand::*;
 use board::BoardItem;
 use player::Player;
 use random_player::RandomPlayer;
+use target_player::TargetPlayer;
 
 fn print_round(b1: &c4::C4, round: usize) {
 	println!("Round: {}", round);
@@ -19,7 +20,7 @@ fn print_round(b1: &c4::C4, round: usize) {
 fn main() {
     let mut b1 = c4::C4::new();
     let mut rng = rand::thread_rng();
-    let mut players = [RandomPlayer::new(BoardItem::Naught), RandomPlayer::new(BoardItem::Cross)];
+    let mut players = [&mut TargetPlayer::new(BoardItem::Naught), &mut RandomPlayer::new(BoardItem::Cross)] as [&mut Player; 2];
 
     let mut round = 0;
 
