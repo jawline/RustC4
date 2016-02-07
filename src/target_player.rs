@@ -16,10 +16,29 @@ impl TargetPlayer {
 			rng: thread_rng()
 		}
 	}
+
+	fn find_target(&self, instance: &mut C4) -> Option<usize> {
+		
+		for h in 0..instance.board.height() {
+			for w in 0..instance.board.width() {
+				if instance.board.get(w, h) == self.player_type && instance.board.get(w + 1, h) == BoardItem::Empty {
+					return Some(w + 1);
+				}
+			}
+		}
+
+		None
+	}
 }
 
 impl Player for TargetPlayer {
+
 	fn take_go(&mut self, board: &mut C4) {
-		random_move(board, self.player_type, &mut self.rng);
+		match self.find_target(board) {
+			Some(w) => {
+				board.insert(w, self.player_type);
+			},
+			_ => random_move(board, self.player_type, &mut self.rng)
+		};
 	}
 }

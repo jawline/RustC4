@@ -1,7 +1,7 @@
 use board::{BoardItem, Board};
 
 pub struct C4 {
-	board: Board
+	pub board: Board
 }
 
 impl C4 {
