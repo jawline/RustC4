@@ -36,20 +36,29 @@ impl C4 {
 	}
 
 	fn along_four(&self, w: usize, h: usize) -> bool {
+		let awh = self.board.get(w, h);
+		self.board.get(w + 1, h) == awh && self.board.get(w + 2, h) == awh && self.board.get(w + 3, h) == awh
 	}
 
 	fn down_four(&self, w: usize, h: usize) -> bool {
+		let awh = self.board.get(w, h);
+		self.board.get(w, h + 1) == awh && self.board.get(w, h + 2) == awh && self.board.get(w, h + 3) == awh
 	}
 
 	fn diag_four(&self, w: usize, h: usize) -> bool {
+		let awh = self.board.get(w, h);
+		self.board.get(w + 1, h + 1) == awh && self.board.get(w + 2, h + 2) == awh && self.board.get(w + 3, h + 3) == awh
 	}
 
 	pub fn is_won(&self) -> bool {
 		for h in 0..(self.board.height() - 4) {
 			for w in 0..(self.board.width() - 4) {
-
+				if self.along_four(w, h) || self.down_four(w, h) || self.diag_four(w, h) {
+					return true;
+				}
 			}
 		}
+		false
 	}
 
 	pub fn print(&self) {
