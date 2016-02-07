@@ -50,10 +50,20 @@ impl C4 {
 	}
 
 	pub fn is_won(&self) -> bool {
-		for h in 0..(self.board.height() - 4) {
-			for w in 0..(self.board.width() - 4) {
-				if self.board.get(w, h) != BoardItem::Empty && (self.along_four(w, h) || self.down_four(w, h) || self.diag_four(w, h)) {
-					return true;
+		for h in 0..self.board.height() {
+			for w in 0..self.board.width() {
+				if self.board.get(w, h) != BoardItem::Empty {
+					if w < self.board.width() - 4 && self.along_four(w, h) {
+						return true;
+					}
+
+					if h < self.board.height() - 4 && self.down_four(w, h) {
+						return true;
+					}
+
+					if w < self.board.width() - 4 && h < self.board.height() - 4 && self.diag_four(w, h) {
+						return true;
+					}
 				}
 			}
 		}
