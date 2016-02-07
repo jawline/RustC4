@@ -21,8 +21,15 @@ impl TargetPlayer {
 		
 		for h in 0..instance.board.height() {
 			for w in 0..instance.board.width() {
-				if instance.board.get(w, h) == self.player_type && instance.board.get(w + 1, h) == BoardItem::Empty {
-					return Some(w + 1);
+				if instance.board.get(w, h) == self.player_type {
+
+					if instance.board.get(w + 1, h) == BoardItem::Empty {
+						return Some(w + 1);
+					}
+
+					if instance.board.get(w, h + 1) == BoardItem::Empty {
+						return Some(w);
+					}
 				}
 			}
 		}
