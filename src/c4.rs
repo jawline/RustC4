@@ -35,8 +35,21 @@ impl C4 {
 		}
 	}
 
-	pub fn is_won() -> bool {
-		false
+	fn along_four(&self, w: usize, h: usize) -> bool {
+	}
+
+	fn down_four(&self, w: usize, h: usize) -> bool {
+	}
+
+	fn diag_four(&self, w: usize, h: usize) -> bool {
+	}
+
+	pub fn is_won(&self) -> bool {
+		for h in 0..(self.board.height() - 4) {
+			for w in 0..(self.board.width() - 4) {
+
+			}
+		}
 	}
 
 	pub fn print(&self) {
