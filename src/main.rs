@@ -1,5 +1,6 @@
 extern crate rand;
 
+mod player;
 mod board;
 mod c4;
 
