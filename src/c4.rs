@@ -53,7 +53,7 @@ impl C4 {
 	pub fn is_won(&self) -> bool {
 		for h in 0..(self.board.height() - 4) {
 			for w in 0..(self.board.width() - 4) {
-				if self.along_four(w, h) || self.down_four(w, h) || self.diag_four(w, h) {
+				if self.board.get(w, h) != BoardItem::Empty && (self.along_four(w, h) || self.down_four(w, h) || self.diag_four(w, h)) {
 					return true;
 				}
 			}

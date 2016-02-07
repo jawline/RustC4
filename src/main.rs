@@ -41,7 +41,7 @@ fn main() {
     b1.print();
     print_round(&b1, round);
 
-    while b1.insertable_columns().len() > 0 {
+    while b1.insertable_columns().len() > 0 && !b1.is_won() {
     	random_insert(&mut b1, item, &mut rng);
     	round = round + 1;
     	print_round(&b1, round);
