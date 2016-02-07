@@ -17,17 +17,21 @@ impl RandomPlayer {
 	}
 }
 
+pub fn random_move(board: &mut C4, player_type: BoardItem, rng: &mut ThreadRng) {
+	let insertable = board.insertable_columns();
+
+	let pick = if insertable.len() == 1 {
+		0
+	} else {
+		rng.gen::<usize>() % insertable.len()
+	};
+
+	board.insert(insertable[pick], player_type);
+	println!("Picked {} of {}", pick, insertable.len());	
+}
+
 impl Player for RandomPlayer {
 	fn take_go(&mut self, board: &mut C4) {
-		let insertable = board.insertable_columns();
-
-		let pick = if insertable.len() == 1 {
-			0
-		} else {
-			self.rng.gen::<usize>() % insertable.len()
-		};
-
-		board.insert(insertable[pick], self.player_type);
-		println!("Picked {} of {}", pick, insertable.len());
+		random_move(board, self.player_type, &mut self.rng);
 	}
 }
