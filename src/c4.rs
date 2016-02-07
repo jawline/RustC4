@@ -26,7 +26,6 @@ impl C4 {
 
 	pub fn insert(&mut self, col: usize, i_type: BoardItem) -> bool {
 		let row = self.find_row_for_insert(col);
-
 		if row.is_some() {
 			self.board.set(i_type, col, row.unwrap());
 			true
