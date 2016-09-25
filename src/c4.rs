@@ -62,15 +62,15 @@ impl C4 {
 		for h in 0..self.board.height() {
 			for w in 0..self.board.width() {
 				if self.board.get(w, h) != BoardItem::Empty {
-					if w < self.board.width() - 4 && self.along_four(w, h) {
+					if w < self.board.width() - 3 && self.along_four(w, h) {
 						return true;
 					}
 
-					if h < self.board.height() - 4 && self.down_four(w, h) {
+					if h < self.board.height() - 3 && self.down_four(w, h) {
 						return true;
 					}
 
-					if w < self.board.width() - 4 && h < self.board.height() - 4 && self.diag_four(w, h) {
+					if w < self.board.width() - 3 && h < self.board.height() - 3 && self.diag_four(w, h) {
 						return true;
 					}
 				}
