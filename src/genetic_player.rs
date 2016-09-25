@@ -20,9 +20,6 @@ impl GeneticPlayer {
 		}
 	}
 
-	fn fitness(x: usize, y: usize) {
-		
-	}
 }
 
 impl Player for GeneticPlayer {

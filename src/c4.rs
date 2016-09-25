@@ -17,7 +17,7 @@ impl C4 {
 		self.board.reset();
 	}
 
-	fn find_row_for_insert(&self, col: usize) -> Option<usize> {
+	pub fn find_row_for_insert(&self, col: usize) -> Option<usize> {
 		(0..self.board.height()).find(|&row| self.board.get(col, row) == BoardItem::Empty)
 	}
 
