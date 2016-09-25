@@ -1,3 +1,4 @@
+use std::cmp;
 use board::{BoardItem, Board};
 
 pub struct C4 {
@@ -10,6 +11,10 @@ impl C4 {
 		C4 {
 			board: Board::new()
 		}
+	}
+
+	pub fn reset(&mut self) {
+		self.board.reset();
 	}
 
 	fn find_row_for_insert(&self, col: usize) -> Option<usize> {
@@ -49,6 +54,10 @@ impl C4 {
 		self.board.get(w + 1, h + 1) == awh && self.board.get(w + 2, h + 2) == awh && self.board.get(w + 3, h + 3) == awh
 	}
 
+	pub fn game_over(&self) -> bool {
+		return self.is_won() || self.insertable_columns().len() == 0;
+	}
+
 	pub fn is_won(&self) -> bool {
 		for h in 0..self.board.height() {
 			for w in 0..self.board.width() {
@@ -68,6 +77,54 @@ impl C4 {
 			}
 		}
 		false
+	}
+
+	pub fn most_score(&self, item: BoardItem) -> usize {
+		let mut most = 0;
+
+		for h in 0..self.board.height() {
+			for w in 0..self.board.width() {
+				if self.board.get(w,h) == item {
+					most = cmp::max(most, 1);
+
+					if self.board.width() < w + 1 && self.board.get(w+1, h) == item {
+						most = cmp::max(most, 2);
+						if self.board.width() < w + 2 && self.board.get(w+2, h) == item {
+							most = cmp::max(most, 3);
+							if self.board.width() < w + 3 && self.board.get(w+3, h) == item {
+								most = cmp::max(most, 4);
+								return most;
+							}
+						}
+					}
+
+					if self.board.height() < h + 1 && self.board.get(w, h+1) == item {
+						most = cmp::max(most, 2);
+						if self.board.height() < h + 2 && self.board.get(w, h+2) == item {
+							most = cmp::max(most, 3);
+							if self.board.height() < h + 3 && self.board.get(w, h+3) == item {
+								most = cmp::max(most, 4);
+								return most;
+							}
+						}
+					}
+
+					if self.board.width() < w + 1 && self.board.height() < h + 1 && self.board.get(w+1, h+1) == item {
+						most = cmp::max(most, 2);
+						if self.board.width() < w + 2 && self.board.height() < h + 2 && self.board.get(w+2, h+2) == item {
+							most = cmp::max(most, 3);
+							if self.board.width() < w + 3 && self.board.height() < h + 3 && self.board.get(w+3, h+3) == item {
+								most = cmp::max(most, 4);
+								return most;
+							}
+						}
+					}
+				}
+
+			}
+		}
+
+		most
 	}
 
 	pub fn print(&self) {

@@ -2,6 +2,8 @@ extern crate rand;
 
 mod player;
 mod random_player;
+mod genetic_player;
+mod greedy_player;
 mod target_player;
 mod board;
 mod c4;
@@ -9,12 +11,25 @@ mod c4;
 use rand::*;
 use board::BoardItem;
 use player::Player;
+use greedy_player::GreedyPlayer;
 use random_player::RandomPlayer;
 use target_player::TargetPlayer;
 
-fn print_round(b1: &c4::C4, round: usize) {
+fn print_round(board: &c4::C4, round: usize) {
 	println!("Round: {}", round);
-	b1.print();
+	board.print();
+}
+
+fn do_game(board: &mut c4::C4, players: &mut [&mut Player; 2]) {
+    board.reset();
+    let mut round = 0;
+    print_round(board, round);
+
+    while !board.game_over() {
+        players[round % 2].take_go(board);
+        round = round + 1;
+        print_round(board, round);
+    }
 }
 
 fn main() {
@@ -22,14 +37,5 @@ fn main() {
     let mut rng = rand::thread_rng();
     let mut players = [&mut TargetPlayer::new(BoardItem::Naught), &mut RandomPlayer::new(BoardItem::Cross)] as [&mut Player; 2];
 
-    let mut round = 0;
-
-    b1.print();
-    print_round(&b1, round);
-
-    while b1.insertable_columns().len() > 0 && !b1.is_won() {
-    	players[round % 2].take_go(&mut b1);
-    	round = round + 1;
-    	print_round(&b1, round);
-    }
+    do_game(&mut b1, &mut players);
 }

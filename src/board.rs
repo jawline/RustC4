@@ -1,3 +1,5 @@
+use std::iter;
+
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum BoardItem {
 	Empty,
@@ -31,6 +33,10 @@ impl Board {
 
 	pub fn width(&self) -> usize {
 		self.width
+	}
+
+	pub fn reset(&mut self) {
+		self.data = iter::repeat(BoardItem::Empty).take(self.width * self.height).collect();
 	}
 
 	pub fn set(&mut self, data: BoardItem, col: usize, row: usize) {
