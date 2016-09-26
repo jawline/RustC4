@@ -35,7 +35,7 @@ fn do_game(board: &mut c4::C4, players: &mut [&mut Player; 2]) {
 fn main() {
     let mut b1 = c4::C4::new();
     let mut rng = rand::thread_rng();
-    let mut players = [&mut GreedyPlayer::new(BoardItem::Naught), &mut RandomPlayer::new(BoardItem::Cross)] as [&mut Player; 2];
+    let mut players = [&mut GreedyPlayer::new(BoardItem::Naught), &mut GreedyPlayer::new(BoardItem::Cross)] as [&mut Player; 2];
 
     do_game(&mut b1, &mut players);
 }
