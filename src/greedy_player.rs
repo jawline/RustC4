@@ -17,25 +17,25 @@ impl GreedyPlayer {
 
 impl Player for GreedyPlayer {
 	fn take_go(&mut self, board: &mut C4) {
-		let mut best_move = (None, None);
+		let mut best_move = None;
 		let mut most_score = 0;
 
 		for w in 0..board.board.width() {
 			let h = board.find_row_for_insert(w);
 			if h.is_some() {
+				let h = h.unwrap();
 				//Can take move
-				board.board.set(self.player_type, w, h.unwrap());
+				board.board.set(self.player_type, w, h);
 				let c_score = board.most_score(self.player_type);
-				board.board.set(BoardItem::Empty, w, h.unwrap());
+				board.board.set(BoardItem::Empty, w, h);
 
 				if c_score > most_score {
 					most_score = c_score;
-					best_move = (Some(w), h);
+					best_move = Some(w)
 				}
 			}
 		}
 
-		let (best_col, _) = best_move;
-		board.insert(best_col.unwrap(), self.player_type);
+		board.insert(best_move.unwrap(), self.player_type);
 	}
 }
